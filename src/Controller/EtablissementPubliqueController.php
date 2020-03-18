@@ -8,28 +8,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Service\GeoApi;
 use App\Service\EtablissementPublicApi;
 
-class CityController extends AbstractController
+class EtablissementPubliqueController extends AbstractController
 {
     /**
-     * @Route("/geo", name="geo")
+     * @Route("/etab", name="city-form")
      * @param Request $request
-     * @param GeoApi $geoApi
+     * @param EtablissementPublicApi $etabPubApi
      * @return Response
      */
-    public function index(Request $request, GeoApi $geoApi)
+    public function index(Request $request, EtablissementPublicApi $etabPubApi)
     {
         $form = $this->createForm(CityFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $city = $data->getCity();
-            $postal_code = $data->getDistrict();
-            $geoApi->getCityInfo($city,$postal_code);
-//            dd($geoApi->getCityInfo());
+            $arrondissement = $data->getDistrict();
+            $etabPubApi->getEtabInfo($arrondissement);
         }
 
         return $this->render('base.html.twig', [

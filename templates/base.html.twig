@@ -6,6 +6,14 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        <header>
+            <ul>
+                <li>
+                    <a href="/etab">Etablissment publique</a>
+                    <a href="/geo">Geolocalisation</a>
+                </li>
+            </ul>
+        </header>
         {% block body %}
             {{ form_start(form) }}
             <button type="submit">Rechercher</button>
