@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\CityInfo;
+use App\Form\CityFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -19,26 +20,20 @@ class CityController extends AbstractController
      */
     public function new(Request $request)
     {
-        // creates a task object and initializes some data for this example
-        $city_info = new CityInfo();
-        $city_info->setCity('');
-        $city_info->setDistrict('');
+        $form = $this->createForm(CityFormType::class);
+        $form->handleRequest($request);
 
-        $form = $this->createFormBuilder($city_info)
-            ->add('city', TextType::class)
-            ->add('district', TextType::class)
-            ->add('search', SubmitType::class, ['label' => 'Rechercher'])
-            ->getForm();
-
-
-        if ($form->isSubmitted() ) {
-            $city = $form->get('city');
-            $postal_code = $form->get('district');
-            dd($city,$postal_code);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $this->fetchData($data);
         }
 
         return $this->render('base.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+    public function fetchData($data){
+        var_dump($data->getCity());
+        var_dump($data->getDistrict());
     }
 }

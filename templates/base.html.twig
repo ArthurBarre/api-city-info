@@ -2,12 +2,14 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}API French city services{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
         {% block body %}
-            {{ form(form) }}
+            {{ form_start(form) }}
+            <button type="submit">Rechercher</button>
+            {{ form_end(form) }}
         {% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
