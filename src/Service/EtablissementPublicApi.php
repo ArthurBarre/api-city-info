@@ -3,10 +3,11 @@ namespace App\Service;
 
 class EtablissementPublicApi
 {
-    public function getEtabInfo($arrondissement) {
+    public function getTownHall($code) {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://etablissements-publics.api.gouv.fr/v3/departements/".$arrondissement."/maison_handicapees");
+        curl_setopt($ch, CURLOPT_URL, "https://etablissements-publics.api.gouv.fr/v3/departements/".$code."/mairie");
         $res = curl_exec($ch);
-        var_dump($res);
+        $result = json_decode($res,true);
+        return $result;
     }
 }
