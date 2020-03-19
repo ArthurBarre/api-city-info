@@ -4,4 +4,21 @@
     {{ form_start(form) }}
     <button type="submit">Rechercher</button>
     {{ form_end(form) }}
+
+    <table>
+    <thead>
+        <tr>
+            <th colspan="2">Nom</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for etab in etabs %}
+            <li>{{ etab.nom }}</li>
+        {% endfor %}
+        <tr>
+            <td>The table body</td>
+            <td>with two columns</td>
+        </tr>
+    </tbody>
+</table>
 {% endblock %}

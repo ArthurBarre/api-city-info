@@ -18,6 +18,32 @@
             {{ form_start(form) }}
             <button type="submit">Rechercher</button>
             {{ form_end(form) }}
+{{ dump(etabs) }}
+                {% for etab in etabs %}
+                <ul>
+                    <li>
+                         {{ etab["properties"]["nom"] }}
+                    </li>
+                    <li>
+                         {{ etab["properties"]["codeInsee"] }}
+                    </li>
+                    <li>
+                          {{ etab["properties"]["telephone"] }}
+                    </li>
+                    <li>
+                          {{ etab["properties"]["url"] }}
+                    </li>
+                    <li>
+                          {{ etab["properties"]["email"] }}
+                    </li>
+                    <li>
+                        {% for addressLines in etab["properties"]["adresses"][0]["lignes"] %}
+                            {{ addressLines }}
+                        {% endfor %}
+                    </li>
+                   
+                </tr>
+                {% endfor %}
         {% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

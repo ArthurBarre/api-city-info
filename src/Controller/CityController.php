@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\GeoApi;
 use App\Service\EtablissementPublicApi;
+use \stdClass;
 
 class CityController extends AbstractController
 {
@@ -24,18 +25,21 @@ class CityController extends AbstractController
     {
         $form = $this->createForm(CityFormType::class);
         $form->handleRequest($request);
-
+        // $etabs = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $postal_code = $data->getDistrict();
             $code = $geoApi->getCityInfo($postal_code);
-            var_dump($code);
+            // var_dump($code);
             $etabs = $etabPub->getTownHall($code);
-            var_dump($etabs);
+            $obj = json_decode (json_encode ($etabs[0]), FALSE);
+            // var_dump($obj->properties);
+
         }
 
         return $this->render('base.html.twig', [
             'form' => $form->createView(),
+            'etabs'=> $etabs
         ]);
     }
 
