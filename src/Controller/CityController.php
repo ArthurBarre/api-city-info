@@ -28,6 +28,7 @@ class CityController extends AbstractController
         $etabs = [];
         $errors = [];
         $code = "";
+        $postal_code = "";
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $postal_code = $data->getDistrict();
