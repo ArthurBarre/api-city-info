@@ -38,14 +38,14 @@ class CityController extends AbstractController
             array_push($errors, 'Veuillez entrer un code postale');
         } else if (strlen($postal_code) !== 5){
             array_push($errors, 'Veuillez entrer un code postale valide');
-        } else if ($etabs == "[]"){
+        } else if ($etabs == []){
             array_push($errors, "Aucune gendarmerie n'a été trouvé pour ce code postale");
         }
 
         return $this->render('base.html.twig', [
             'form' => $form->createView(),
             'etabs'=> $etabs,
-            'erros'=>$errors
+            'errors'=>$errors
         ]);
     }
 
