@@ -1,50 +1,68 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}API French city services{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        <header>
-            <ul>
-                <li>
-                    <a href="/etab">Etablissment publique</a>
-                    <a href="/geo">Geolocalisation</a>
-                </li>
-            </ul>
-        </header>
-        {% block body %}
-            {{ form_start(form) }}
+  <head>
+      <meta charset="UTF-8">
+      <title>{% block title %}API French city services{% endblock %}</title>
+      {% block stylesheets %}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+      {% endblock %}
+  </head>
+  <body>
+    {% block body %}
+      <div class="task-container columns is-multiline">
+        <div 
+          class="card column is-half is-offset-one-quarter" 
+          style="display:flex; justify-content:center; padding:6px; margin-top: 40px
+          "
+        >
+          {{ form_start(form) }}
             <button type="submit">Rechercher</button>
-            {{ form_end(form) }}
-{{ dump(etabs) }}
-                {% for etab in etabs %}
+          {{ form_end(form) }}
+        </div>
+      </div>
+        <div class="container" style="margin-top: 40px">
+          {% for etab in etabs %}
+          <ul class="list">
+            <li class="list-item is-hoverable">
+              <h5 class="title">
+                {{ etab["properties"]["nom"] }}
+              </h5>
+            </li>
+            <li class="list-item is-hoverable">
+              <label class="label">Adresse</label>
+              {% for adrrese in etab["properties"]["adresses"][0]["lignes"] %}
+                {{ adrrese }}
+              {% endfor %}
+            </li>
+            <li class="list-item is-hoverable">
+              <label class="label">Email</label>
+              <adress>
+                {{ etab["properties"]["email"] }}
+              </adress>
+            </li>
+            <li class="list-item is-hoverable">
+              <label class="label">Code Insee</label>
+              {{ etab["properties"]["codeInsee"] }}
+            </li>
+            <li class="list-item is-hoverable">
+              <label class="label">Téléphone</label>
+              {{ etab["properties"]["telephone"] }}
+            </li>
+            <li class="list-item is-hoverable">
+              <h6 class="subtitle"> Couverture des zones</h6>
                 <ul>
-                    <li>
-                         {{ etab["properties"]["nom"] }}
-                    </li>
-                    <li>
-                         {{ etab["properties"]["codeInsee"] }}
-                    </li>
-                    <li>
-                          {{ etab["properties"]["telephone"] }}
-                    </li>
-                    <li>
-                          {{ etab["properties"]["url"] }}
-                    </li>
-                    <li>
-                          {{ etab["properties"]["email"] }}
-                    </li>
-                    <li>
-                        {% for addressLines in etab["properties"]["adresses"][0]["lignes"] %}
-                            {{ addressLines }}
-                        {% endfor %}
-                    </li>
-                   
-                </tr>
+                {% for zone in etab["properties"]["zonage"]["communes"] %}
+                  <li>{{ zone }}</li>
                 {% endfor %}
-        {% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+                </ul>
+            </li>
+            <li class="list-item">
+              <label class="label">Url Site</label>
+              <a target="_blank" rel="noopener" href="{{ etab["properties"]["url"] }}">{{ etab["properties"]["nom"] }}</a>
+            </li>
+          </ul>
+          {% endfor %}
+    {% endblock %}
+      {% block javascripts %}{% endblock %}
+  </body>
 </html>
