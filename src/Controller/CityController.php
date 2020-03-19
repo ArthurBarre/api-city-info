@@ -25,21 +25,27 @@ class CityController extends AbstractController
     {
         $form = $this->createForm(CityFormType::class);
         $form->handleRequest($request);
-        // $etabs = [];
+        $etabs = [];
+        $errors = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $postal_code = $data->getDistrict();
             $code = $geoApi->getCityInfo($postal_code);
-            // var_dump($code);
             $etabs = $etabPub->getTownHall($code);
-            $obj = json_decode (json_encode ($etabs[0]), FALSE);
-            // var_dump($obj->properties);
-
+            var_dump($etabs);
+        }
+        if ($postal_code == '') {
+            array_push($errors, 'Veuillez entrer un code postale');
+        } else if (strlen($postal_code) !== 5){
+            array_push($errors, 'Veuillez entrer un code postale valide');
+        } else if ($etabs == "[]"){
+            array_push($errors, "Aucune gendarmerie n'a été trouvé pour ce code postale");
         }
 
         return $this->render('base.html.twig', [
             'form' => $form->createView(),
-            'etabs'=> $etabs
+            'etabs'=> $etabs,
+            'erros'=>$errors
         ]);
     }
 
