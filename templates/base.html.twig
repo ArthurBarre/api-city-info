@@ -19,12 +19,21 @@
             <button type="submit">Rechercher</button>
           {{ form_end(form) }}
         </div>
-        {% if errors != null %}
-          {% for error in errors %}
-            <p>{{error}}</p>
-          {% endfor %}
-        {% endif %}
       </div>
+      {% if errors != [] %}
+        <div class="column is-half is-offset-one-quarter">
+          <div class="message is-danger">
+            <div class="message-header">
+              Errors
+            </div>
+            {% for error in errors %}
+              <div class="message-body">
+                <p>{{error}}</p>
+              </div>
+            {% endfor %}
+          </div>
+        <div>
+        {% endif %}
         <div class="container" style="margin-top: 40px">
           {% for etab in etabs %}
           <ul class="list">

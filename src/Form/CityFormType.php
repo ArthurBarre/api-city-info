@@ -12,7 +12,6 @@ class CityFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('city')
             ->add('district')
         ;
     }

@@ -27,16 +27,16 @@ class CityController extends AbstractController
         $form->handleRequest($request);
         $etabs = [];
         $errors = [];
+        $code = "";
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $postal_code = $data->getDistrict();
             $code = $geoApi->getCityInfo($postal_code);
             $etabs = $etabPub->getTownHall($code);
-            var_dump($etabs);
         }
         if ($postal_code == '') {
             array_push($errors, 'Veuillez entrer un code postale');
-        } else if (strlen($postal_code) !== 5){
+        } else if ($code === false){
             array_push($errors, 'Veuillez entrer un code postale valide');
         } else if ($etabs == []){
             array_push($errors, "Aucune gendarmerie n'a été trouvé pour ce code postale");
